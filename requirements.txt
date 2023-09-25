@@ -6,3 +6,4 @@ lightning==2.0.5
 Pillow
 numpy
 gradio
+sentencepiece

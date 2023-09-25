@@ -1,8 +1,9 @@
 #!/bin/bash
 
+env_name="reportwizard"
 dataset="mimic_cxr"
-annotation="./data/mimic_cxr/annnotation.json"
-base_dir="./data/mimic_cxr/images"
+annotation="./data/mimic_cxr/annotation.json"
+base_dir="/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files"
 
 version="v1_shallow"
 savepath="./save/$dataset/$version"
@@ -14,7 +15,7 @@ else
   echo "Folder '$savepath' already exists."
 fi
 
-python -u train.py \
+~/.conda/envs/${env_name}/bin/python -u train.py \
     --dataset ${dataset} \
     --annotation ${annotation} \
     --base_dir ${base_dir} \

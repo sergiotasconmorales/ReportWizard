@@ -1,14 +1,15 @@
 #!/bin/bash
 
+env_name="reportwizard"
 dataset="mimic_cxr"
-annotation="data/mimic_cxr/my_mimic_anno.json"
-base_dir="./data/mimic_cxr/images"
+annotation="data/mimic_cxr/annotation.json"
+base_dir="/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files"
 delta_file="path/to/pretrained/delta_file"
 
 version="v1_delta"
 savepath="./save/$dataset/$version"
 
-python -u train.py \
+~/.conda/envs/${env_name}/bin/python -u train.py \
     --test \
     --dataset ${dataset} \
     --annotation ${annotation} \

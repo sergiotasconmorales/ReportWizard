@@ -1,0 +1,407 @@
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 4, in <module>
+    from dataset.data_module import DataModule
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_module.py", line 1, in <module>
+    from lightning.pytorch import LightningDataModule
+ModuleNotFoundError: No module named 'lightning'
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 4, in <module>
+    from dataset.data_module import DataModule
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_module.py", line 3, in <module>
+    from dataset.data_helper import create_datasets
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_helper.py", line 6, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 4, in <module>
+    from dataset.data_module import DataModule
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_module.py", line 3, in <module>
+    from dataset.data_helper import create_datasets
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_helper.py", line 8, in <module>
+    from transformers import BertTokenizer, AutoImageProcessor
+ModuleNotFoundError: No module named 'transformers'
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 6, in <module>
+    from models.R2GenGPT import R2GenGPT
+  File "/storage/homefs/st20f757/vqa/ReportWizard/models/R2GenGPT.py", line 13, in <module>
+    from peft import get_peft_model, LoraConfig, TaskType
+ModuleNotFoundError: No module named 'peft'
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': './data/mimic_cxr/annnotation.json',
+ 'base_dir': '/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llama_model': 'meta-llama/Llama-2-7b-chat-hf',
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': '16',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 16,
+ 'val_batch_size': 12,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+[rank: 0] Global seed set to 42
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 51, in <module>
+    main()
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 47, in main
+    train(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 13, in train
+    callbacks = add_callbacks(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/lightning_tools/callbacks.py", line 23, in add_callbacks
+    tb_logger = pl_loggers.TensorBoardLogger(save_dir=os.path.join(log_dir, "logs"), name="tensorboard")
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/loggers/tensorboard.py", line 109, in __init__
+    super().__init__(
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/fabric/loggers/tensorboard.py", line 92, in __init__
+    raise ModuleNotFoundError(
+ModuleNotFoundError: Neither `tensorboard` nor `tensorboardX` is available. Try `pip install`ing either.
+DistributionNotFound: The 'tensorboardX' distribution was not found and is required by the application. HINT: Try running `pip install -U 'tensorboardX'`
+DistributionNotFound: The 'tensorboard' distribution was not found and is required by the application. HINT: Try running `pip install -U 'tensorboard'`
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': './data/mimic_cxr/annnotation.json',
+ 'base_dir': '/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llama_model': 'meta-llama/Llama-2-7b-chat-hf',
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': '16',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 16,
+ 'val_batch_size': 12,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+[rank: 0] Global seed set to 42
+/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/fabric/connector.py:554: UserWarning: 16 is supported for historical reasons but its usage is discouraged. Please set your precision to 16-mixed instead!
+  rank_zero_warn(
+Using 16bit Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Downloading (…)lve/main/config.json:   0%|          | 0.00/71.8k [00:00<?, ?B/s]Downloading (…)lve/main/config.json: 100%|██████████| 71.8k/71.8k [00:00<00:00, 787kB/s]
+Downloading model.safetensors:   0%|          | 0.00/352M [00:00<?, ?B/s]Downloading model.safetensors:   3%|▎         | 10.5M/352M [00:00<00:27, 12.4MB/s]Downloading model.safetensors:   6%|▌         | 21.0M/352M [00:01<00:14, 22.1MB/s]Downloading model.safetensors:   9%|▉         | 31.5M/352M [00:01<00:11, 27.8MB/s]Downloading model.safetensors:  12%|█▏        | 41.9M/352M [00:01<00:10, 30.9MB/s]Downloading model.safetensors:  15%|█▍        | 52.4M/352M [00:02<00:10, 28.7MB/s]Downloading model.safetensors:  18%|█▊        | 62.9M/352M [00:02<00:10, 27.7MB/s]Downloading model.safetensors:  21%|██        | 73.4M/352M [00:02<00:10, 26.2MB/s]Downloading model.safetensors:  24%|██▍       | 83.9M/352M [00:03<00:11, 23.7MB/s]Downloading model.safetensors:  27%|██▋       | 94.4M/352M [00:03<00:09, 26.2MB/s]Downloading model.safetensors:  30%|██▉       | 105M/352M [00:04<00:09, 26.4MB/s] Downloading model.safetensors:  33%|███▎      | 115M/352M [00:04<00:08, 29.1MB/s]Downloading model.safetensors:  36%|███▌      | 126M/352M [00:04<00:08, 27.8MB/s]Downloading model.safetensors:  39%|███▉      | 136M/352M [00:05<00:07, 28.5MB/s]Downloading model.safetensors:  42%|████▏     | 147M/352M [00:05<00:06, 30.8MB/s]Downloading model.safetensors:  45%|████▍     | 157M/352M [00:05<00:06, 28.3MB/s]Downloading model.safetensors:  48%|████▊     | 168M/352M [00:06<00:06, 28.8MB/s]Downloading model.safetensors:  51%|█████     | 178M/352M [00:06<00:05, 32.6MB/s]Downloading model.safetensors:  54%|█████▎    | 189M/352M [00:06<00:04, 33.9MB/s]Downloading model.safetensors:  57%|█████▋    | 199M/352M [00:06<00:04, 34.6MB/s]Downloading model.safetensors:  60%|█████▉    | 210M/352M [00:07<00:04, 34.8MB/s]Downloading model.safetensors:  63%|██████▎   | 220M/352M [00:07<00:04, 31.6MB/s]Downloading model.safetensors:  66%|██████▌   | 231M/352M [00:08<00:03, 30.9MB/s]Downloading model.safetensors:  69%|██████▊   | 241M/352M [00:08<00:03, 29.3MB/s]Downloading model.safetensors:  72%|███████▏  | 252M/352M [00:08<00:03, 31.5MB/s]Downloading model.safetensors:  75%|███████▍  | 262M/352M [00:08<00:02, 33.4MB/s]Downloading model.safetensors:  78%|███████▊  | 273M/352M [00:09<00:02, 32.7MB/s]Downloading model.safetensors:  81%|████████  | 283M/352M [00:09<00:02, 29.2MB/s]Downloading model.safetensors:  84%|████████▎ | 294M/352M [00:10<00:02, 27.0MB/s]Downloading model.safetensors:  86%|████████▋ | 304M/352M [00:10<00:01, 26.1MB/s]Downloading model.safetensors:  89%|████████▉ | 315M/352M [00:11<00:01, 24.9MB/s]Downloading model.safetensors:  92%|█████████▏| 325M/352M [00:11<00:01, 25.5MB/s]Downloading model.safetensors:  95%|█████████▌| 336M/352M [00:12<00:00, 24.1MB/s]Downloading model.safetensors:  98%|█████████▊| 346M/352M [00:12<00:00, 26.8MB/s]Downloading model.safetensors: 100%|██████████| 352M/352M [00:12<00:00, 20.5MB/s]Downloading model.safetensors: 100%|██████████| 352M/352M [00:12<00:00, 27.3MB/s]
+Some weights of the model checkpoint at microsoft/swin-base-patch4-window7-224 were not used when initializing SwinModel: ['classifier.weight', 'classifier.bias']
+- This IS expected if you are initializing SwinModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing SwinModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading LLAMA
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 51, in <module>
+    main()
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 47, in main
+    train(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 33, in train
+    model = R2GenGPT(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/models/R2GenGPT.py", line 49, in __init__
+    self.llama_tokenizer = LlamaTokenizer.from_pretrained(args.llama_model, use_fast=False)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1026, in __getattribute__
+    requires_backends(cls, cls._backends)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1014, in requires_backends
+    raise ImportError("".join(failed))
+ImportError: 
+LlamaTokenizer requires the SentencePiece library but it was not found in your environment. Checkout the instructions on the
+installation page of its repo: https://github.com/google/sentencepiece#installation and follow the ones
+that match your environment. Please note that you may need to restart your runtime after installation.
+
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': './data/mimic_cxr/annnotation.json',
+ 'base_dir': '/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llama_model': 'meta-llama/Llama-2-7b-chat-hf',
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': '16',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 16,
+ 'val_batch_size': 12,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+[rank: 0] Global seed set to 42
+/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/fabric/connector.py:554: UserWarning: 16 is supported for historical reasons but its usage is discouraged. Please set your precision to 16-mixed instead!
+  rank_zero_warn(
+Using 16bit Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Some weights of the model checkpoint at microsoft/swin-base-patch4-window7-224 were not used when initializing SwinModel: ['classifier.weight', 'classifier.bias']
+- This IS expected if you are initializing SwinModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing SwinModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading LLAMA
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/utils/_errors.py", line 261, in hf_raise_for_status
+    response.raise_for_status()
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/requests/models.py", line 1021, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/meta-llama/Llama-2-7b-chat-hf/resolve/main/tokenizer.model
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/transformers/utils/hub.py", line 417, in cached_file
+    resolved_file = hf_hub_download(
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1344, in hf_hub_download
+    raise head_call_error
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1230, in hf_hub_download
+    metadata = get_hf_file_metadata(
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 118, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/file_download.py", line 1606, in get_hf_file_metadata
+    hf_raise_for_status(r)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/huggingface_hub/utils/_errors.py", line 277, in hf_raise_for_status
+    raise GatedRepoError(message, response) from e
+huggingface_hub.utils._errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-6511a955-2a744f4753052b630afe49ca;3e6ac822-e892-44c3-b626-26102960b13b)
+
+Cannot access gated repo for url https://huggingface.co/meta-llama/Llama-2-7b-chat-hf/resolve/main/tokenizer.model.
+Repo model meta-llama/Llama-2-7b-chat-hf is gated. You must be authenticated to access it.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 51, in <module>
+    main()
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 47, in main
+    train(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 33, in train
+    model = R2GenGPT(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/models/R2GenGPT.py", line 49, in __init__
+    self.llama_tokenizer = LlamaTokenizer.from_pretrained(args.llama_model, use_fast=False)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 1784, in from_pretrained
+    resolved_vocab_files[file_id] = cached_file(
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/transformers/utils/hub.py", line 433, in cached_file
+    raise EnvironmentError(
+OSError: meta-llama/Llama-2-7b-chat-hf is not a local folder and is not a valid model identifier listed on 'https://huggingface.co/models'
+If this is a private repository, make sure to pass a token having permission to this repo with `use_auth_token` or log in with `huggingface-cli login` and pass `use_auth_token=True`.
+{'accelerator': 'gpu',
+ 'accumulate_grad_batches': 1,
+ 'annotation': './data/mimic_cxr/annnotation.json',
+ 'base_dir': '/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files',
+ 'batch_size': 8,
+ 'beam_size': 3,
+ 'ckpt_file': None,
+ 'dataset': 'mimic_cxr',
+ 'delta_file': None,
+ 'devices': 4,
+ 'diversity_penalty': 0,
+ 'do_sample': False,
+ 'end_sym': '</s>',
+ 'every_n_train_steps': 0,
+ 'freeze_vm': True,
+ 'global_only': False,
+ 'gradient_clip_val': 1,
+ 'learning_rate': 0.0001,
+ 'length_penalty': 2.0,
+ 'limit_test_batches': 1.0,
+ 'limit_train_batches': 1.0,
+ 'limit_val_batches': 0.5,
+ 'llama_model': 'daryl149/llama-2-7b-chat-hf',
+ 'llm_alpha': 16,
+ 'llm_r': 16,
+ 'llm_use_lora': False,
+ 'lora_dropout': 0.1,
+ 'low_resource': False,
+ 'max_epochs': 5,
+ 'max_length': 100,
+ 'max_new_tokens': 120,
+ 'min_new_tokens': 80,
+ 'no_repeat_ngram_size': 2,
+ 'num_beam_groups': 1,
+ 'num_nodes': 1,
+ 'num_sanity_val_steps': 2,
+ 'num_workers': 8,
+ 'precision': '16',
+ 'prefetch_factor': 4,
+ 'repetition_penalty': 2.0,
+ 'savedmodel_path': './save/mimic_cxr/v1_shallow',
+ 'scorer_types': ['Bleu_4', 'CIDEr'],
+ 'strategy': 'ddp',
+ 'temperature': 0,
+ 'test': False,
+ 'test_batch_size': 16,
+ 'val_batch_size': 12,
+ 'val_check_interval': 0.5,
+ 'validate': False,
+ 'vis_alpha': 16,
+ 'vis_r': 16,
+ 'vis_use_lora': False,
+ 'vision_model': 'microsoft/swin-base-patch4-window7-224',
+ 'weights': [0.5, 0.5]}
+[rank: 0] Global seed set to 42
+/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/fabric/connector.py:554: UserWarning: 16 is supported for historical reasons but its usage is discouraged. Please set your precision to 16-mixed instead!
+  rank_zero_warn(
+Using 16bit Automatic Mixed Precision (AMP)
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Loading vision encoder:microsoft/swin-base-patch4-window7-224
+Some weights of the model checkpoint at microsoft/swin-base-patch4-window7-224 were not used when initializing SwinModel: ['classifier.bias', 'classifier.weight']
+- This IS expected if you are initializing SwinModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing SwinModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Loading Frozen vision encoder:microsoft/swin-base-patch4-window7-224 -- Done
+Loading LLAMA
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:15<00:15, 15.62s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:20<00:00,  9.54s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:20<00:00, 10.45s/it]
+Loading LLAMA Done
+[rank: 0] Global seed set to 42
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/1
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 1 processes
+----------------------------------------------------------------------------------------------------
+
+You are using a CUDA device ('NVIDIA GeForce RTX 3090') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Traceback (most recent call last):
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 51, in <module>
+    main()
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 47, in main
+    train(args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/train.py", line 40, in train
+    trainer.fit(model, datamodule=dm)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 529, in fit
+    call._call_and_handle_interrupt(
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 41, in _call_and_handle_interrupt
+    return trainer.strategy.launcher.launch(trainer_fn, *args, trainer=trainer, **kwargs)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/strategies/launchers/subprocess_script.py", line 91, in launch
+    return function(*args, **kwargs)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 568, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/trainer/trainer.py", line 934, in _run
+    call._call_setup_hook(self)  # allow user to setup lightning_module in accelerator environment
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 83, in _call_setup_hook
+    _call_lightning_datamodule_hook(trainer, "setup", stage=fn)
+  File "/storage/homefs/st20f757/.conda/envs/reportwizard/lib/python3.10/site-packages/lightning/pytorch/trainer/call.py", line 164, in _call_lightning_datamodule_hook
+    return fn(*args, **kwargs)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_module.py", line 44, in setup
+    train_dataset, dev_dataset, test_dataset = create_datasets(self.args)
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_helper.py", line 93, in create_datasets
+    train_dataset = ParseDataset(args, 'train')
+  File "/storage/homefs/st20f757/vqa/ReportWizard/dataset/data_helper.py", line 81, in __init__
+    self.meta = json.load(open(args.annotation, 'r'))
+FileNotFoundError: [Errno 2] No such file or directory: './data/mimic_cxr/annnotation.json'
