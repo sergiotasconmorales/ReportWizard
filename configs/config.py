@@ -15,7 +15,7 @@ parser.add_argument('--num_workers', default=8, type=int, help="Cpu num for data
 
 # ========================= Model Settings ============================
 parser.add_argument('--vision_model', default='microsoft/swin-base-patch4-window7-224', type=str, help="vision model to use")
-parser.add_argument('--llama_model', default='daryl149/llama-2-7b-chat-hf', type=str, help="LLM model to use")
+parser.add_argument('--llama_model', default='meta-llama/Llama-2-7b-chat-hf', type=str, help="LLM model to use")
 parser.add_argument('--freeze_vm', default=True, type=lambda x: (str(x).lower() == 'true'), help='freeze vision model')
 parser.add_argument('--llm_use_lora', default=False, type=lambda x: (str(x).lower() == 'true'), help="whether use lora for LLM model")
 parser.add_argument('--llm_r', default=16, type=int, help='The dimension used by the LoRA update matrices')

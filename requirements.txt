@@ -7,3 +7,6 @@ Pillow
 numpy
 gradio
 sentencepiece
+accelerate
+bitsandbytes
+scipy

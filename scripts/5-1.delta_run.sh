@@ -32,7 +32,7 @@ fi
     --repetition_penalty 2.0 \
     --length_penalty 2.0 \
     --num_workers 16 \
-    --devices 4 \
+    --devices 8 \
     --max_epochs 5 \
     --limit_val_batches 0.5 \
     --val_check_interval 0.5 \
