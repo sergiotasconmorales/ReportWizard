@@ -12,6 +12,8 @@ from transformers import SwinModel
 from lightning_tools.optim import config_optimizer
 from peft import get_peft_model, LoraConfig, TaskType
 import pdb
+from torch.distributed.fsdp.wrap import wrap
+from deepspeed.ops.adam import FusedAdam
 
 
 
@@ -98,7 +100,7 @@ class R2GenGPT(pl.LightningModule):
         scorers = [
             (Bleu(4), ["Bleu_1", "Bleu_2", "Bleu_3", "Bleu_4"]),
             (Rouge(), "ROUGE_L"),
-            (Meteor(), "METEOR"),
+            #(Meteor(), "METEOR"),
             (Cider(), "CIDEr")
         ]
         final_scores = {}
@@ -365,7 +367,7 @@ class R2GenGPT(pl.LightningModule):
         self.print(f"Test result of {self.hparams.delta_file}: {eval_res}")
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=self.hparams.learning_rate)
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.hparams.learning_rate)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer=optimizer, T_max=self.hparams.max_epochs, eta_min=1e-6)
         return {"optimizer": optimizer, "lr_scheduler": scheduler}
 

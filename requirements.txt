@@ -1,4 +1,4 @@
-torch
+torch --index-url https://download.pytorch.org/whl/cu118
 peft
 tensorboardX
 transformers==4.30.2
@@ -10,3 +10,4 @@ sentencepiece
 accelerate
 bitsandbytes
 scipy
+deepspeed
