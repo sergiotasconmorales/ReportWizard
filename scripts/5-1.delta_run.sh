@@ -1,6 +1,6 @@
 #!/bin/bash
 
-env_name="reportwizard"
+env_name="reportwiz"
 dataset="mimic_cxr"
 annotation="data/mimic_cxr/annotation.json"
 base_dir="/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files"
@@ -19,8 +19,8 @@ fi
     --dataset ${dataset} \
     --annotation ${annotation} \
     --base_dir ${base_dir} \
-    --batch_size 8 \
-    --val_batch_size 16 \
+    --batch_size 4 \
+    --val_batch_size 4 \
     --freeze_vm True \
     --vis_use_lora True \
     --vis_r 16 \
@@ -32,9 +32,12 @@ fi
     --repetition_penalty 2.0 \
     --length_penalty 2.0 \
     --num_workers 16 \
-    --devices 8 \
+    --devices 4 \
     --max_epochs 5 \
     --limit_val_batches 0.5 \
     --val_check_interval 0.5 \
     --num_sanity_val_steps 2 \
+    --num_sanity_val_steps 2 \
+    --strategy "ddp"\
+    --low_resource True \
     2>&1 |tee -a ${savepath}/log.txt

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-env_name="reportwizard"
+env_name="reportwiz"
 dataset="mimic_cxr"
 annotation="data/mimic_cxr/annotation.json"
 base_dir="/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files"
-delta_file="path/to/pretrained/delta_file"
+delta_file="/storage/homefs/st20f757/vqa/ReportWizard/save/mimic_cxr/v1_delta/checkpoints/checkpoint_epoch2_step42310_bleu0.171872_cider0.280992.pth"
 
 version="v1_delta"
 savepath="./save/$dataset/$version"
@@ -20,7 +20,7 @@ savepath="./save/$dataset/$version"
     --max_new_tokens 120 \
     --repetition_penalty 2.0 \
     --length_penalty 2.0 \
-    --test_batch_size 16 \
+    --test_batch_size 4 \
     --freeze_vm True \
     --vis_use_lora True \
     --vis_r 16 \

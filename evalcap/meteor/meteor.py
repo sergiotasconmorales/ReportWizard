@@ -32,7 +32,7 @@ class Meteor:
         # Used to guarantee thread safety
         self.lock = threading.Lock()
 
-        mem = '1G'
+        mem = '2G'
         mem_available_G = psutil.virtual_memory().available / 1E9
         if mem_available_G < 2:
             logging.warning("There is less than 2GB of available memory.\n"
@@ -41,16 +41,18 @@ class Meteor:
                             "then you can try to lower the `mem` variable in meteor.py")
             mem = '1G'
 
-        meteor_cmd = ['java', '-jar', '-Xmx{}'.format(mem), METEOR_JAR,
+        meteor_cmd = ['/software.el7/software/Java/11.0.2/bin/java', '-jar', '-Xmx{}'.format(mem), METEOR_JAR,
                       '-', '-', '-stdio', '-l', 'en', '-norm']
+        
         env = os.environ.copy()
         env['LC_ALL'] = "C"
-        self.meteor_p = subprocess.Popen(meteor_cmd,
+        self.meteor_p = subprocess.Popen(' '.join(self.meteor_cmd),
                                          cwd=os.path.dirname(os.path.abspath(__file__)),
                                          env=env,
                                          stdin=subprocess.PIPE,
                                          stdout=subprocess.PIPE,
-                                         stderr=subprocess.PIPE)
+                                         stderr=subprocess.PIPE,
+                                        )
 
         atexit.register(self.close)
 

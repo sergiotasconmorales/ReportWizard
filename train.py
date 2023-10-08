@@ -3,13 +3,10 @@ from pprint import pprint
 from configs.config import parser
 from dataset.data_module import DataModule
 from lightning_tools.callbacks import add_callbacks
-from lightning.pytorch.strategies import DeepSpeedStrategy
 from models.R2GenGPT import R2GenGPT
 from lightning.pytorch import seed_everything
 import lightning.pytorch as pl
-from accelerate import dispatch_model, infer_auto_device_map
-from accelerate.utils import get_balanced_memory
-from transformers import AutoTokenizer
+
  
 def train(args):
     dm = DataModule(args)
@@ -18,7 +15,7 @@ def train(args):
     trainer = pl.Trainer(
         devices=args.devices,
         num_nodes=args.num_nodes,
-        strategy=DeepSpeedStrategy(stage=3, offload_parameters=True),
+        strategy=args.strategy,
         accelerator=args.accelerator,
         precision=args.precision,
         val_check_interval = args.val_check_interval,
@@ -33,15 +30,8 @@ def train(args):
     if args.ckpt_file is not None:
         model = R2GenGPT.load_from_checkpoint(args.ckpt_file, strict=False)
     else:
-        model = R2GenGPT(args).to('cpu') # bring to cpu for parallelization
+        model = R2GenGPT(args)
 
-    """
-    for i in model.named_parameters():
-        #print(f"{i[0]} -> {i[1].device}")
-        # print dtype
-        print(f"{i[0]} -> {i[1].dtype}")
-    """
-    
     if args.test:
         trainer.test(model, datamodule=dm)
     elif args.validate:
@@ -49,7 +39,6 @@ def train(args):
     else:
         trainer.fit(model, datamodule=dm)
 
-        
 def main():
     args = parser.parse_args()
     os.makedirs(args.savedmodel_path, exist_ok=True)
@@ -60,3 +49,11 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+    #for i in model.named_parameters():
+    #    print(f"{i[0]} -> {i[1].device}")
+        # print dtype
+        #print(f"{i[0]} -> {i[1].dtype}")

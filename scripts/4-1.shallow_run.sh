@@ -19,8 +19,8 @@ fi
     --dataset ${dataset} \
     --annotation ${annotation} \
     --base_dir ${base_dir} \
-    --batch_size 8 \
-    --val_batch_size 12 \
+    --batch_size 4 \
+    --val_batch_size 4\
     --freeze_vm True \
     --vis_use_lora False \
     --savedmodel_path ${savepath} \
@@ -37,7 +37,7 @@ fi
     --limit_val_batches 0.5 \
     --val_check_interval 0.5 \
     --num_sanity_val_steps 2 \
-    --strategy "deepspeed_stage_3"\
-    #--low_resource True \
+    --strategy "ddp"\
+    --low_resource True \
     
     2>&1 |tee -a ${savepath}/log.txt

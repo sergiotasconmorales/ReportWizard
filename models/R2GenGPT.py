@@ -12,8 +12,6 @@ from transformers import SwinModel
 from lightning_tools.optim import config_optimizer
 from peft import get_peft_model, LoraConfig, TaskType
 import pdb
-from torch.distributed.fsdp.wrap import wrap
-from deepspeed.ops.adam import FusedAdam
 
 
 
@@ -55,7 +53,7 @@ class R2GenGPT(pl.LightningModule):
                 args.llama_model,
                 torch_dtype=torch.float16,
                 load_in_8bit=True,
-                device_map="auto"
+                #device_map="auto"
             )
         else:
             self.llama_model = LlamaForCausalLM.from_pretrained(
@@ -223,6 +221,57 @@ class R2GenGPT(pl.LightningModule):
         torch.save(save_obj, save_to)
     
     def validation_step(self, samples, batch_idx):
+        # Modified from original code to avoid using generate
+        image = samples["image"]
+        img_embeds, atts_img = self.encode_img(image)
+        img_embeds = self.layer_norm(img_embeds)
+
+        img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img)
+
+        self.llama_tokenizer.padding_side = "right"
+        text = [t + self.end_sym for t in samples["input_text"]]
+
+        to_regress_tokens = self.llama_tokenizer(
+            text,
+            return_tensors="pt",
+            padding="max_length",
+            truncation=True,
+            max_length=self.hparams.max_length,
+            add_special_tokens=False
+        ).to(image[0].device)
+
+        targets = to_regress_tokens.input_ids.masked_fill(
+            to_regress_tokens.input_ids == 0, -100
+        )
+
+        empty_targets = (
+            torch.ones([atts_img.shape[0], atts_img.shape[1]+1],
+                       dtype=torch.long).to(image[0].device).fill_(-100)  # plus one for bos
+        )
+        targets = torch.cat([empty_targets, targets], dim=1)
+
+        batch_size = img_embeds.shape[0]
+        bos = torch.ones([batch_size, 1],
+                         dtype=to_regress_tokens.input_ids.dtype,
+                         device=to_regress_tokens.input_ids.device) * self.llama_tokenizer.bos_token_id
+        bos_embeds = self.embed_tokens(bos)
+        atts_bos = atts_img[:, :1]
+
+        to_regress_embeds = self.embed_tokens(to_regress_tokens.input_ids)
+        inputs_embeds = torch.cat([bos_embeds, img_embeds, to_regress_embeds], dim=1)
+        attention_mask = torch.cat([atts_bos, atts_img, to_regress_tokens.attention_mask], dim=1)
+
+        outputs = self.llama_model(
+            inputs_embeds=inputs_embeds,
+            attention_mask=attention_mask,
+            return_dict=True,
+            labels=targets,
+        ) # output contains loss, logits and past_key_values
+
+        self.val_step_outputs.append({"val_loss": outputs.loss, "id": samples["id"]})
+        return outputs.loss
+
+    def validation_step(self, samples, batch_idx):
         self.llama_tokenizer.padding_side = "right"
         to_regress_tokens = self.llama_tokenizer(
             samples['input_text'],
@@ -248,20 +297,22 @@ class R2GenGPT(pl.LightningModule):
         inputs_embeds = torch.cat([bos_embeds, img_embeds], dim=1)
         attention_mask = torch.cat([atts_bos, atts_img], dim=1)
 
-        outputs = self.llama_model.generate(
-            inputs_embeds=inputs_embeds,
-            num_beams=self.hparams.beam_size,
-            do_sample=self.hparams.do_sample,
-            min_new_tokens=self.hparams.min_new_tokens,
-            max_new_tokens=self.hparams.max_new_tokens,
-            repetition_penalty=self.hparams.repetition_penalty,
-            length_penalty=self.hparams.length_penalty,
-            temperature=self.hparams.temperature,
-        )
-        hypo = [self.decode(i) for i in outputs]
-        ref = [self.decode(i) for i in to_regress_tokens['input_ids']]
-        self.val_step_outputs.append({"hypo": hypo, "ref": ref, "id": samples["id"]})
-        return hypo, ref
+        with torch.cuda.amp.autocast(): #Add to avoid error about location of tensors, but then error outofmemory appears
+
+            outputs = self.llama_model.generate(
+                inputs_embeds=inputs_embeds,
+                num_beams=self.hparams.beam_size,
+                do_sample=self.hparams.do_sample,
+                min_new_tokens=self.hparams.min_new_tokens,
+                max_new_tokens=self.hparams.max_new_tokens,
+                repetition_penalty=self.hparams.repetition_penalty,
+                length_penalty=self.hparams.length_penalty,
+                temperature=self.hparams.temperature,
+            )
+            hypo = [self.decode(i) for i in outputs]
+            ref = [self.decode(i) for i in to_regress_tokens['input_ids']]
+            self.val_step_outputs.append({"hypo": hypo, "ref": ref, "id": samples["id"]})
+            return hypo, ref
     
     def decode(self, output_token):
         if output_token[0] == 0:  # the model might output a unknow token <unk> at the beginning. remove it
@@ -367,7 +418,7 @@ class R2GenGPT(pl.LightningModule):
         self.print(f"Test result of {self.hparams.delta_file}: {eval_res}")
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.hparams.learning_rate)
+        optimizer = torch.optim.AdamW(self.parameters(), lr=self.hparams.learning_rate)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer=optimizer, T_max=self.hparams.max_epochs, eta_min=1e-6)
         return {"optimizer": optimizer, "lr_scheduler": scheduler}
 
