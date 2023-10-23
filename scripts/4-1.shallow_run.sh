@@ -32,12 +32,12 @@ fi
     --repetition_penalty 2.0 \
     --length_penalty 2.0 \
     --num_workers 4 \
-    --devices 4 \
+    --devices 2 \
     --max_epochs 5 \
     --limit_val_batches 0.5 \
     --val_check_interval 0.5 \
     --num_sanity_val_steps 2 \
     --strategy "ddp"\
-    --low_resource True \
+    --low_resource False \
     
     2>&1 |tee -a ${savepath}/log.txt

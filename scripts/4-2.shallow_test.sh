@@ -4,7 +4,7 @@ env_name="reportwiz"
 dataset="mimic_cxr"
 annotation="data/mimic_cxr/annotation.json"
 base_dir="/storage/workspaces/artorg_aimi/ws_00000/sergio/radrep/mimic-cxr-jpg-google/files"
-delta_file="/storage/homefs/st20f757/vqa/ReportWizard/save/mimic_cxr/v1_shallow/checkpoints/checkpoint_epoch3_step59234_bleu0.166449_cider0.229910.pth"
+delta_file="/storage/homefs/st20f757/vqa/ReportWizard/save/mimic_cxr/v1_shallow/checkpoints/checkpoint_epoch4_step169240_bleu0.170310_cider0.277632.pth"
 
 version="v1_shallow"
 savepath="./save/$dataset/$version"
@@ -15,7 +15,7 @@ savepath="./save/$dataset/$version"
     --annotation ${annotation} \
     --base_dir ${base_dir} \
     --delta_file ${delta_file} \
-    --test_batch_size 8 \
+    --test_batch_size 4 \
     --freeze_vm True \
     --vis_use_lora False \
     --savedmodel_path ${savepath} \

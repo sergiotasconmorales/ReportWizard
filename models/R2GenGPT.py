@@ -190,6 +190,17 @@ class R2GenGPT(pl.LightningModule):
             labels=targets,
         )
         loss = outputs.loss
+        # check if loss is nan
+        """
+        if torch.isnan(loss):
+            save_to_inputs_embeds = os.path.join(self.hparams.savedmodel_path, 'nan_loss_cause',"inputs_embeds.pth")
+            save_to_attention_mask = os.path.join(self.hparams.savedmodel_path, 'nan_loss_cause',"attention_mask.pth")
+            save_to_targets = os.path.join(self.hparams.savedmodel_path, 'nan_loss_cause',"targets.pth")
+            torch.save(inputs_embeds, save_to_inputs_embeds)
+            torch.save(attention_mask, save_to_attention_mask)
+            torch.save(targets, save_to_targets)
+            raise ValueError
+        """
         return {"loss": loss}
 
     def training_step(self, batch, batch_idx):
@@ -220,56 +231,6 @@ class R2GenGPT(pl.LightningModule):
         self.print("Saving checkpoint at step {} to {}.".format(global_step, save_to))
         torch.save(save_obj, save_to)
     
-    def validation_step(self, samples, batch_idx):
-        # Modified from original code to avoid using generate
-        image = samples["image"]
-        img_embeds, atts_img = self.encode_img(image)
-        img_embeds = self.layer_norm(img_embeds)
-
-        img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img)
-
-        self.llama_tokenizer.padding_side = "right"
-        text = [t + self.end_sym for t in samples["input_text"]]
-
-        to_regress_tokens = self.llama_tokenizer(
-            text,
-            return_tensors="pt",
-            padding="max_length",
-            truncation=True,
-            max_length=self.hparams.max_length,
-            add_special_tokens=False
-        ).to(image[0].device)
-
-        targets = to_regress_tokens.input_ids.masked_fill(
-            to_regress_tokens.input_ids == 0, -100
-        )
-
-        empty_targets = (
-            torch.ones([atts_img.shape[0], atts_img.shape[1]+1],
-                       dtype=torch.long).to(image[0].device).fill_(-100)  # plus one for bos
-        )
-        targets = torch.cat([empty_targets, targets], dim=1)
-
-        batch_size = img_embeds.shape[0]
-        bos = torch.ones([batch_size, 1],
-                         dtype=to_regress_tokens.input_ids.dtype,
-                         device=to_regress_tokens.input_ids.device) * self.llama_tokenizer.bos_token_id
-        bos_embeds = self.embed_tokens(bos)
-        atts_bos = atts_img[:, :1]
-
-        to_regress_embeds = self.embed_tokens(to_regress_tokens.input_ids)
-        inputs_embeds = torch.cat([bos_embeds, img_embeds, to_regress_embeds], dim=1)
-        attention_mask = torch.cat([atts_bos, atts_img, to_regress_tokens.attention_mask], dim=1)
-
-        outputs = self.llama_model(
-            inputs_embeds=inputs_embeds,
-            attention_mask=attention_mask,
-            return_dict=True,
-            labels=targets,
-        ) # output contains loss, logits and past_key_values
-
-        self.val_step_outputs.append({"val_loss": outputs.loss, "id": samples["id"]})
-        return outputs.loss
 
     def validation_step(self, samples, batch_idx):
         self.llama_tokenizer.padding_side = "right"
